@@ -4,19 +4,45 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="{% static 'js/firebase.js' %}"></script>
-    <script type='text/javascript'
-        src='https://cdn.firebase.com/js/simple-login/1.6.2/firebase-simple-login.js'>
-    </script>
+
+
     <link rel="stylesheet" type="text/css" href="{% block css %} {% endblock %}">
     <title>Put Data In Its Place</title>
 </head>
 <body>
+
+
 <h1>CROnut</h1>
+
+ <script type='text/javascript' src='https://cdn.firebase.com/js/client/1.0.17/firebase.js'></script>
+    <script type='text/javascript'
+        src='https://cdn.firebase.com/js/simple-login/1.6.2/firebase-simple-login.js'></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+         var fireJSON;
+            fireJSON = new Firebase('https://cronut.firebaseio.com');
+            var auth = new FirebaseSimpleLogin(fireJSON, function(error, user) {
+                console.log("User object authenticated: " + user);
+                console.log("Access Token from Google Auth: " + user.accessToken);
+                console.log("Display Name: " + user.email);
+                console.log("");
+            });
+
+            $("#googleLogin").on('click', function(){
+                auth.login('google');
+            });
+        });
+    </script>
+
+<button id="googleLogin">Login With Google</button>
+
+
 
 {% block content %}
 
 {% endblock %}
 </body>
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 </html>
